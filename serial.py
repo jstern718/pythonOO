@@ -18,15 +18,18 @@ class SerialGenerator:
     100
     """
     def __init__(self, start = 100):
-        """create a serial instance with a number"""
+        """create a serial number"""
         self.number = start - 1
         self.counter = start - 1
     
+    def __repr__(self):
+        return f"<Serial Generator number={self.number}> counter={self.counter}"
+
     def generate(self):
-        """returns a new number based the class counter number"""
+        """returns the next number in the sequence"""
         self.counter += 1
         return self.counter
     
     def reset(self):
-        """resets to the instance's start number"""
+        """resets to the start number"""
         self.counter = self.number
