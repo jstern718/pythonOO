@@ -1,24 +1,31 @@
 from random import choice
 
 class WordFinder:
-    """Word Finder: finds random words from a dictionary."""
+    """Word Finder: finds random word from a dictionary."""
 
     def __init__(self, path):
-        self.path = path
-        self.words = self.get_words()
-
-    def get_words(self):
-        word_file = open(self.path, "r")
-        words = []
-        for line in word_file:
-            words.append(line)
+        """creates list of words from file path"""
+        word_file = open(path, "r")
+        self.words = self.get_words(word_file)
+        print(f"words read {len(self.words)}")
         word_file.close()
-        return words
+
+    def get_words(self, file):
+        """returns a list of words from the file path"""
+    
+        return [line.strip() for line in file]
 
     def get_random(self):
+        """returns a random word from the words list"""
         return choice(self.words)
 
 
-word_instance = WordFinder("words")
-print(word_instance.words)
-print(word_instance.get_random())
+class SpecialWordFinder(WordFinder):
+    """Special Word Finder: finds a random word from a document ignoring 
+    comments and blank lines"""
+
+    def get_words(self, file):
+        """returns a list of words with comments and blank lines omitted"""
+        word_list = super().get_words(file)
+        return [ word for word in word_list 
+            if not (word.startswith("#") or word == "")]
